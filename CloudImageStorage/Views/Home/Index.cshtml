@@ -1,0 +1,43 @@
+﻿@model List<CloudImageStorage.Models.Image>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>FileName</th>
+            <th>View</th>
+            <th>Tags</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Image image in Model)
+        {
+            <tr>
+                <td>@image.FileName</td>
+                <td><img src="@image.Uri" class="img-thumbnail" style="max-width: 100%" alt="@image.Tags" /></td>
+                <td>
+                    @foreach (string tag in image.Tags)
+                    {
+                        <a asp-controller="Home" asp-action="Index" asp-route-tag="@tag">@tag</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-12">
+        <form enctype="multipart/form-data" method="post" asp-controller="Home" asp-action="UploadFile">
+            <input type="file" name="image" value="imageFile" />
+            <button class="btn btn-primary">Load</button>
+        </form>
+    </div>
+</div>
